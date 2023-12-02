@@ -29,12 +29,14 @@ const CheckOTPForm = ({ onBack, phoneNumber, onResendOtp, otpResponse }) => {
     try {
       const { user, message } = await mutateAsync({ phoneNumber, otp });
       toast.success(message);
-      if (user.isActive) {
-        if (user.role === "OWNER") navigate("/owner");
-        if (user.role === "FREELANCER") navigate("/freelancer");
-      } else {
-        navigate("/complete-profile");
+
+      if (user.status !== 2) {
+        navigate("/");
+        toast.promise("Your profile is pending approval");
+        return;
       }
+      if (user.role === "OWNER") return navigate("/owner");
+      if (user.role === "FREELANCER") return navigate("/freelancer");
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }

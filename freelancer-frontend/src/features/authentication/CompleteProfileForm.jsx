@@ -1,15 +1,42 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
+import { completeProfile } from "../../services/authService";
 
 import TextField from "../../ui/TextField";
 import RadioInput from "../../ui/RadioInput";
+import Loading from "../../ui/Loading";
 
 const CompleteProfileForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const { isPending, error, data, mutateAsync } = useMutation({
+    mutationFn: completeProfile,
+  });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const { user, message } = await mutateAsync({ name, email, role });
+      toast.success(message);
+
+      if (user.status !== 2) {
+        navigate("/");
+        toast.promise("Your profile is pending approval");
+        return;
+      }
+      if (user.role === "OWNER") return navigate("/owner");
+      if (user.role === "FREELANCER") return navigate("/freelancer");
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
   };
 
   return (
@@ -28,7 +55,6 @@ const CompleteProfileForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
           <div className="flex justify-center items-center gap-x-8">
             <RadioInput
               label="Owner"
@@ -47,7 +73,13 @@ const CompleteProfileForm = () => {
               onChange={(e) => setRole(e.target.value)}
             />
           </div>
-          <button className="btn btn--primary w-full">Accept</button>
+          {isPending ? (
+            <Loading />
+          ) : (
+            <button type="submit" className="btn btn--primary w-full">
+              Accept
+            </button>
+          )}{" "}
         </form>
       </div>
     </div>
