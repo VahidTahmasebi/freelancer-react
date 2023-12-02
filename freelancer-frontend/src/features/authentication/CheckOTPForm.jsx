@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import OTPInput from "react-otp-input";
 import toast from "react-hot-toast";
 
+import { HiArrowRight } from "react-icons/hi";
+
 import { checkOtp } from "../../services/authService";
 
 import Loading from "../../ui/Loading";
 
-const CheckOTPForm = ({ phoneNumber }) => {
+const RESEND_TIME = 90;
+
+const CheckOTPForm = ({ onBack, phoneNumber, onResendOtp }) => {
   const [otp, setOtp] = useState("");
+  const [time, setTime] = useState(RESEND_TIME);
 
   const navigate = useNavigate();
 
@@ -34,8 +39,30 @@ const CheckOTPForm = ({ phoneNumber }) => {
     }
   };
 
+  useEffect(() => {
+    const timer =
+      time > 0 &&
+      setInterval(() => {
+        setTime((t) => t - 1);
+      }, 1000);
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [time]);
+
   return (
     <div>
+      <button onClick={onBack}>
+        <HiArrowRight className="w-6 h-6 text-secondary-500" />
+      </button>
+      <div className="mb-4 text-secondary-500">
+        {time > 0 ? (
+          <p>{time} to resend the code</p>
+        ) : (
+          <button onClick={onResendOtp}>Resend the code</button>
+        )}
+      </div>
       <form onSubmit={checkOtpHandler} className="space-y-10">
         <p className="font-bold text-secondary-500">Enter Auth Code</p>
 

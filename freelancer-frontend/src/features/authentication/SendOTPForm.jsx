@@ -1,31 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
-
-import { getOtp } from "../../services/authService";
-
 import Loading from "../../ui/Loading";
 import TextField from "../../ui/TextField";
 
-const SendOTPForm = ({ phoneNumber, setStep, onChange }) => {
-  const { isPending, error, data, mutateAsync } = useMutation({
-    mutationFn: getOtp,
-  });
-
-  const sendOtpHandler = async (e) => {
-    e.preventDefault();
-
-    try {
-      const res = await mutateAsync({ phoneNumber });
-      setStep(2);
-      toast.success(res?.message);
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-    }
-  };
-
+const SendOTPForm = ({ isSendingOtp, phoneNumber, onChange, onSubmit }) => {
   return (
     <div>
-      <form onSubmit={sendOtpHandler} className="space-y-10">
+      <form onSubmit={onSubmit} className="space-y-10">
         <div>
           <TextField
             label="Phone Number"
@@ -34,7 +13,7 @@ const SendOTPForm = ({ phoneNumber, setStep, onChange }) => {
             onChange={onChange}
           />
         </div>
-        {isPending ? (
+        {isSendingOtp ? (
           <Loading />
         ) : (
           <button type="submit" className="btn btn--primary w-full">
