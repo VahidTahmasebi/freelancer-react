@@ -5,6 +5,7 @@ import OTPInput from "react-otp-input";
 import toast from "react-hot-toast";
 
 import { HiArrowRight } from "react-icons/hi";
+import { CiEdit } from "react-icons/ci";
 
 import { checkOtp } from "../../services/authService";
 
@@ -12,7 +13,7 @@ import Loading from "../../ui/Loading";
 
 const RESEND_TIME = 90;
 
-const CheckOTPForm = ({ onBack, phoneNumber, onResendOtp }) => {
+const CheckOTPForm = ({ onBack, phoneNumber, onResendOtp, otpResponse }) => {
   const [otp, setOtp] = useState("");
   const [time, setTime] = useState(RESEND_TIME);
 
@@ -56,6 +57,14 @@ const CheckOTPForm = ({ onBack, phoneNumber, onResendOtp }) => {
       <button onClick={onBack}>
         <HiArrowRight className="w-6 h-6 text-secondary-500" />
       </button>
+      {otpResponse && (
+        <div className="flex items-center gap-x-2 my-4">
+          <span> {otpResponse?.message}</span>
+          <button onClick={onBack}>
+            <CiEdit className="w-6 h-6 text-primary-900" />
+          </button>
+        </div>
+      )}
       <div className="mb-4 text-secondary-500">
         {time > 0 ? (
           <p>{time} to resend the code</p>
