@@ -4,6 +4,7 @@ import truncateText from "../../utils/truncateText";
 
 import Loading from "../../ui/Loading";
 import Empty from "../../ui/Empty";
+import toLocalDateShort from "../../utils/toLocalDateShort";
 
 const ProjectTable = () => {
   const { isLoading, projects } = useOwnerProjects();
@@ -35,7 +36,7 @@ const ProjectTable = () => {
               <td>{truncateText(project.title, 30)}</td>
               <td>{project.category.title}</td>
               <td>{project.budget}</td>
-              <td>{project.deadline}</td>
+              <td>{toLocalDateShort(project.deadline)}</td>
               {/* <td>{project.tags.join("-")}</td> */}
               <td>
                 <div className="max-w-[200px] flex items-center flex-wrap gap-2">
