@@ -1,7 +1,7 @@
 import Loading from "../../ui/Loading";
 import TextField from "../../ui/TextField";
 
-const SendOTPForm = ({ isSendingOtp, phoneNumber, onChange, onSubmit }) => {
+const SendOTPForm = ({ isSendingOtp, register, errors, onSubmit }) => {
   return (
     <div>
       <form onSubmit={onSubmit} className="space-y-10">
@@ -9,8 +9,19 @@ const SendOTPForm = ({ isSendingOtp, phoneNumber, onChange, onSubmit }) => {
           <TextField
             label="Phone Number"
             name="phoneNumber"
-            value={phoneNumber}
-            onChange={onChange}
+            maxlength={11}
+            register={register}
+            required
+            validationSchema={{
+              required: "Phone Number is Required",
+              minLength: {
+                value: 11,
+                message: "Phone number length is invalid",
+              },
+            }}
+            errors={errors}
+            // value={phoneNumber}
+            // onChange={onChange}
           />
         </div>
         {isSendingOtp ? (
