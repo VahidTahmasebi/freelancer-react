@@ -5,5 +5,9 @@ export function getOwnerProjectsApi() {
 }
 
 export function removeProjectsApi(id) {
-  return http.get(`/project/${id}`).then(({ data }) => data.data);
+  return http.delete(`/project/${id}`).then(({ data }) => data.data);
+}
+
+export function createProjectApi(data) {
+  return http.post("/project/add", data).then(({ data }) => data.data);
 }

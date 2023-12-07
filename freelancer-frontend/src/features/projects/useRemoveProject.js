@@ -11,7 +11,7 @@ export default function useRemoveProject() {
     mutationFn: removeProjectsApi,
     onSuccess: (data) => {
       console.log(data);
-      toast.success("The project was suc cessfully deleted");
+      toast.success("The project was successfully deleted");
       queryClient.invalidateQueries({
         queryKey: ["owner-projects"],
       });
