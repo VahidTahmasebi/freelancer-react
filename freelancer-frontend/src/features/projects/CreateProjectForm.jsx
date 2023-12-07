@@ -1,8 +1,19 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { TagsInput } from "react-tag-input-component";
+
+import useCategories from "../../hooks/useCategories";
 
 import TextField from "../../ui/TextField";
+import RHFSelect from "../../ui/RHFSelect";
+import DatePickerField from "../../ui/DatePickerField";
 
 const CreateProjectForm = () => {
+  const [tags, setTags] = useState([]);
+  const [date, setDate] = useState(new Date());
+
+  const { categories } = useCategories();
+
   const {
     register,
     formState: { errors },
@@ -50,6 +61,21 @@ const CreateProjectForm = () => {
           required: "بودجه ضروری است",
         }}
       />
+      <RHFSelect
+        label="Category"
+        name="category"
+        register={register}
+        options={categories}
+        required
+      />
+
+      <div>
+        <label htmlFor="" className="block mb-2 text-secondary-700">
+          Tag
+        </label>
+        <TagsInput name="tags" value={tags} onChange={setTags} />
+      </div>
+      <DatePickerField label="Deadline" date={date} setDate={setDate} />
       <button type="submit" className="btn btn--primary w-full">
         Accept
       </button>
