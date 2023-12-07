@@ -25,6 +25,7 @@ const ProjectTable = () => {
         <th>Freelancer</th>
         <th>Status</th>
         <th>Operation</th>
+        <th>Requests</th>
       </Table.Header>
 
       <Table.Body>
