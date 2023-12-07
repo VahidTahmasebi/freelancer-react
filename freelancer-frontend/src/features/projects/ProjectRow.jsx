@@ -12,6 +12,7 @@ import truncateText from "../../utils/truncateText";
 import Table from "../../ui/Table";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import CreateProjectForm from "./CreateProjectForm";
 
 export const ProjectRow = ({ index, project }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -54,7 +55,10 @@ export const ProjectRow = ({ index, project }) => {
               open={isEditOpen}
               onClose={() => setIsEditOpen(false)}
               title={`${project.title} Edit`}>
-              modal edit
+              <CreateProjectForm
+                onClose={() => setIsEditOpen(false)}
+                projectEdit={project}
+              />
             </Modal>
           </>
           <>

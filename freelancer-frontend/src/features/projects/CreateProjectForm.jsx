@@ -3,27 +3,50 @@ import { useForm } from "react-hook-form";
 import { TagsInput } from "react-tag-input-component";
 
 import useCategories from "../../hooks/useCategories";
+import useCreateProject from "./useCreateProject";
+import useEditProject from "./useEditProject";
 
 import Loading from "../../ui/Loading";
 import TextField from "../../ui/TextField";
 import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
 
-import useCreateProject from "./useCreateProject";
+const CreateProjectForm = ({ onclose, projectEdit = {} }) => {
+  const {
+    _id: editId,
+    subject,
+    description,
+    budget,
+    deadline,
+    category,
+    tags: prevTags,
+  } = projectEdit;
 
-const CreateProjectForm = ({ onclose }) => {
-  const [tags, setTags] = useState([]);
-  const [date, setDate] = useState(new Date());
+  const isEditSession = Boolean(editId);
+
+  let editValues = {};
+  if (isEditSession) {
+    editValues = {
+      subject,
+      description,
+      budget,
+      category: category._id,
+    };
+  }
+
+  const [tags, setTags] = useState(prevTags || []);
+  const [date, setDate] = useState(new Date(deadline || ""));
 
   const { categories } = useCategories();
   const { isCreating, createProject } = useCreateProject();
+  const { isEditing, editProject } = useEditProject();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm();
+  } = useForm({ defaultValues: editValues });
 
   const onSubmit = (data) => {
     const newProject = {
@@ -31,12 +54,22 @@ const CreateProjectForm = ({ onclose }) => {
       deadline: new Date(date).toISOString(),
       tags,
     };
-    createProject(newProject, {
-      onSuccess: () => {
-        onclose();
-        reset();
-      },
-    });
+
+    if (isEditSession) {
+      editProject(editValues, {
+        onSuccess: () => {
+          onclose();
+          reset();
+        },
+      });
+    } else {
+      createProject(newProject, {
+        onSuccess: () => {
+          onclose();
+          reset();
+        },
+      });
+    }
   };
 
   return (
