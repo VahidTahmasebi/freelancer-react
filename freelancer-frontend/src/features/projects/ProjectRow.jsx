@@ -13,6 +13,7 @@ import Table from "../../ui/Table";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import CreateProjectForm from "./CreateProjectForm";
+import ToggleProjectStatus from "./ToggleProjectStatus";
 
 export const ProjectRow = ({ index, project }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -39,11 +40,12 @@ export const ProjectRow = ({ index, project }) => {
       </td>
       <td>{project.freelancer?.name || "-"}</td>
       <td>
-        {project.status === "OPEN" ? (
+        <ToggleProjectStatus project={project} />
+        {/* {project.status === "OPEN" ? (
           <span className="badge badge--success">Open</span>
         ) : (
           <span className="badge badge--danger">Close</span>
-        )}
+        )} */}
       </td>
       <td>
         <div className="flex items-center gap-x-4">
