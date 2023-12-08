@@ -8,12 +8,12 @@ const OwnerLayout = () => {
   return (
     <AppLayout>
       <Sidebar>
-        <CustomNavLink to="/owner/dashboard">
+        <CustomNavLink to="dashboard">
           <HiHome />
           <span>Home</span>
         </CustomNavLink>
 
-        <CustomNavLink to="/owner/projects">
+        <CustomNavLink to="projects">
           <HiCollection />
           <span>Projects</span>
         </CustomNavLink>
