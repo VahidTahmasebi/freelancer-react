@@ -15,16 +15,17 @@ const statusStyle = [
 ];
 
 export const ProposalRow = ({ index, proposal }) => {
-  const { status, user } = proposal;
+  const { _id, user, description, duration, price, status } = proposal;
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Table.Row>
       <td>{index + 1}</td>
-      <td>{proposal.user?.name || "-"}</td>
-      <td>{truncateText(proposal.description, 50)}</td>
-      <td>{proposal.duration} days</td>
-      <td>{toPersianNumbersWithComma(proposal.price)}</td>
+      <td>{user?.name || "-"}</td>
+      <td>{truncateText(description, 50)}</td>
+      <td>{duration} days</td>
+      <td>{toPersianNumbersWithComma(price)}</td>
       <td>
         <span className={`badge ${statusStyle[status].className}`}></span>
         {statusStyle[status].label}
@@ -39,7 +40,7 @@ export const ProposalRow = ({ index, proposal }) => {
               open={isOpen}
               onClose={() => setIsOpen(false)}>
               <ChangeProposalStatus
-                proposalId={proposal._id}
+                proposalId={_id}
                 onClose={() => setIsOpen(false)}
               />
             </Modal>
