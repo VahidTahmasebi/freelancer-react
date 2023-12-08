@@ -10,7 +10,7 @@ export default function useCreateProject() {
     mutationFn: createProjectApi,
     onSuccess: (data) => {
       console.log(data);
-      toast.success("The project was successfully Added");
+      toast.success(data.message);
 
       //   update date
       queryClient.invalidateQueries({

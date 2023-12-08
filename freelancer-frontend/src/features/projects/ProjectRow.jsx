@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { HiEye, HiOutline } from "react-icons/hi";
+import { HiEye, HiOutlineAcademicCap } from "react-icons/hi";
 import { TbPencilMinus } from "react-icons/tb";
 
 import useRemoveProject from "./useRemoveProject";
@@ -66,7 +66,7 @@ export const ProjectRow = ({ index, project }) => {
           </>
           <>
             <button onClick={setIsDeleteOpen(true)}>
-              <HiOutline className="w-5 h-5 text-error" />
+              <HiOutlineAcademicCap className="w-5 h-5 text-error" />
             </button>
             <Modal
               open={isDeleteOpen}
