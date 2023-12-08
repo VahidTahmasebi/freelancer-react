@@ -1,8 +1,8 @@
-import useProposals from "../proposlas/useProposals";
+import useProposals from "../proposals/useProposals";
 
 import Loading from "../../ui/Loading";
+import DashboardHeader from "../../ui/DashboardHeader";
 
-import DashboardHeader from "./DashboardHeader";
 import Stats from "./Stats";
 
 function DashboardLayout() {

@@ -1,8 +1,8 @@
 import useOwnerProjects from "../projects/useOwnerProjects";
 
 import Loading from "../../ui/Loading";
+import DashboardHeader from "../../ui/DashboardHeader";
 
-import DashboardHeader from "./DashboardHeader";
 import Stats from "./stats";
 
 const DashboardLayout = () => {
