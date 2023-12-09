@@ -1,6 +1,6 @@
 import Empty from "../../ui/Empty";
 import Table from "../../ui/Table";
-import { ProjectRow } from "../projects/ProjectRow";
+
 import { ProposalRow } from "./ProposalRow";
 
 const ProposalsTable = ({ proposals }) => {
