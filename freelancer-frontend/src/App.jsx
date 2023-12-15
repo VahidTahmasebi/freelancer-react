@@ -5,6 +5,8 @@ import { Toaster } from "react-hot-toast";
 
 import { DarkModeProvider } from "./context/DarkModeContext";
 
+import ProtectedRoute from "./ui/ProtectedRoute";
+
 import Auth from "./pages/Auth";
 import CompleteProfile from "./pages/CompleteProfile";
 import OwnerLayout from "./features/owner/OwnerLayout";
@@ -30,13 +32,25 @@ function App() {
         <Routes>
           <Route path="/auth" element={<Auth />} />
           <Route path="/complete-profile" element={<CompleteProfile />} />
-          <Route path="/owner" element={<OwnerLayout />}>
+          <Route
+            path="/owner"
+            element={
+              <ProtectedRoute>
+                <OwnerLayout />
+              </ProtectedRoute>
+            }>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<OwnerDashboard />} />
             <Route path="projects" element={<Projects />} />
             <Route path="project:id" element={<Project />} />
           </Route>
-          <Route path="/freelancer" element={<FreelancerLayout />}>
+          <Route
+            path="/freelancer"
+            element={
+              <ProtectedRoute>
+                <FreelancerLayout />
+              </ProtectedRoute>
+            }>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<FreelancerDashboard />} />
             <Route path="proposals" element={<Proposals />} />
