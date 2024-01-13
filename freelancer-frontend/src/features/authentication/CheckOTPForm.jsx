@@ -31,12 +31,25 @@ const CheckOTPForm = ({ onBack, phoneNumber, onResendOtp, otpResponse }) => {
       toast.success(message);
 
       if (user.status !== 2) {
-        navigate("/");
-        toast.promise("Your profile is pending approval");
-        return;
+        toast.error("Your profile is pending approval");
+        return navigate("/");
       }
-      if (user.role === "OWNER") return navigate("/owner");
-      if (user.role === "FREELANCER") return navigate("/freelancer");
+      // if (user.role === "OWNER") return navigate("/owner");
+      // if (user.role === "FREELANCER") return navigate("/freelancer");
+      // if (user.role === "ADMIN") return navigate("/admin");
+      switch (user.role) {
+        case "OWNER":
+          navigate("/owner");
+          break;
+        case "FREELANCER":
+          navigate("/freelancer");
+          break;
+        case "ADMIN":
+          navigate("/admin");
+          break;
+        default:
+          break;
+      }
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }

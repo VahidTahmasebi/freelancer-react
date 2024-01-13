@@ -19,6 +19,9 @@ import Proposals from "./pages/Proposals";
 import SubmittedProjects from "./pages/SubmittedProjects";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import AdminLayout from "./features/admin/AdminLayout";
+import AdminDashboard from "./pages/AdminDashboard";
+import Users from "./pages/Users";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +58,19 @@ function App() {
             <Route path="dashboard" element={<FreelancerDashboard />} />
             <Route path="proposals" element={<Proposals />} />
             <Route path="projects " element={<SubmittedProjects />} />
+          </Route>
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="users" element={<Users />} />
+            <Route path="proposals" element={<Proposals />} />
+            <Route path="projects" element={<SubmittedProjects />} />
           </Route>
           <Route path="/" element={<Home />} />
           <Route path="/*" element={<NotFound />} />

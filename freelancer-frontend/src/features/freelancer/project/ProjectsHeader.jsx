@@ -16,6 +16,7 @@ const statusOption = [
 
 const ProjectsHeader = () => {
   const { transformedCategories } = useCategories();
+
   return (
     <div className="flex justify-between items-center mb-8 text-secondary-700">
       <h1 className="text-lg font-bold">Projects list</h1>
