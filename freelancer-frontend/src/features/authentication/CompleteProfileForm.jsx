@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 import { completeProfile } from "../../services/authService";
+
+import useUser from "./useUser";
 
 import Loading from "../../ui/Loading";
 import TextField from "../../ui/TextField";
@@ -19,6 +22,8 @@ const CompleteProfileForm = () => {
   const { isPending, error, data, mutateAsync } = useMutation({
     mutationFn: completeProfile,
   });
+
+  const { user } = useUser();
 
   const {
     register,
@@ -46,6 +51,10 @@ const CompleteProfileForm = () => {
       toast.error(error?.response?.data?.message);
     }
   };
+
+  useEffect(() => {
+    if (user) navigate("/", { replace: true });
+  }, [user, navigate]);
 
   return (
     <div className="flex justify-center pt-10">
